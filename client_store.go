@@ -1,6 +1,8 @@
 package sqlite
 
 import (
+	"context"
+
 	"github.com/go-oauth2/oauth2/v4"
 	"github.com/go-oauth2/oauth2/v4/models"
 )
@@ -19,7 +21,7 @@ func NewClientStore(filename string) (*ClientStore, error) {
 	}, nil
 }
 
-func (c *ClientStore) Set(info oauth2.ClientInfo) error {
+func (c *ClientStore) Set(ctx context.Context, info oauth2.ClientInfo) error {
 	return c.repository.Insert(&ClientItem{
 		Id:     info.GetID(),
 		Secret: info.GetSecret(),
@@ -28,7 +30,7 @@ func (c *ClientStore) Set(info oauth2.ClientInfo) error {
 	})
 }
 
-func (c *ClientStore) GetByID(id string) (oauth2.ClientInfo, error) {
+func (c *ClientStore) GetByID(ctx context.Context, id string) (oauth2.ClientInfo, error) {
 	item, err := c.repository.GetById(id)
 	if err != nil {
 		return nil, err
@@ -41,6 +43,6 @@ func (c *ClientStore) GetByID(id string) (oauth2.ClientInfo, error) {
 	}, nil
 }
 
-func (c *ClientStore) RemoveByID(id string) error {
+func (c *ClientStore) RemoveByID(ctx context.Context, id string) error {
 	return c.repository.RemoveById(id)
 }
