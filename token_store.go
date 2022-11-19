@@ -21,6 +21,10 @@ func NewSqliteStore(filename string) (oauth2.TokenStore, error) {
 	return &TokenStore{repository: r}, nil
 }
 
+func (s *TokenStore) Close() {
+	s.repository.Close()
+}
+
 func (s *TokenStore) Create(ctx context.Context, info TokenInfo) error {
 	infoRaw, err := json.Marshal(info)
 	if err != nil {
