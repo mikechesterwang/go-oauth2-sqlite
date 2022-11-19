@@ -13,7 +13,7 @@ type TokenStore struct {
 	repository *TokenRepository
 }
 
-func NewSqliteStore(filename string) (oauth2.TokenStore, error) {
+func NewSqliteStore(filename string) (*TokenStore, error) {
 	r, err := NewTokenRepository(filename)
 	if err != nil {
 		return nil, err
